@@ -22,7 +22,7 @@
  * 
  * @RunWith(SpringRunner.class)
  * 
- * @WebMvcTest(value= JwtAuthenticationController.class) public class
+ * @WebMvcTest(value = JwtAuthenticationController.class) public class
  * JwtControllerTest {
  * 
  * @Autowired private MockMvc mockMvc;
@@ -46,7 +46,6 @@
  * 
  * 
  * }
- * 
  * 
  * }
  */

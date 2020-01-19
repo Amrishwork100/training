@@ -14,7 +14,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.eatza.order.model.Order;
 import com.eatza.order.model.OrderedItem;
@@ -22,7 +24,9 @@ import com.eatza.order.repository.OrderedItemRepository;
 import com.eatza.order.service.itemservice.ItemServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
-@SpringBootTest
+@DataJpaTest
+@AutoConfigurationPackage
+@SpringBootConfiguration
 public class ItemServiceTest {
 	
 	@Mock

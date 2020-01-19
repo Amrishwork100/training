@@ -37,8 +37,7 @@
  * 
  * @RunWith(SpringRunner.class)
  * 
- * @WebMvcTest(value= OrderController.class) public class OrderControllerTest {
- * 
+ * @WebMvcTest(value = OrderController.class) public class OrderControllerTest {
  * 
  * @Autowired private MockMvc mockMvc;
  * 
@@ -46,15 +45,13 @@
  * 
  * @Autowired private ObjectMapper objectMapper;
  * 
- * private static final long EXPIRATIONTIME = 900000; String jwt=""; String
- * invalidjwt="";
+ * private static final long EXPIRATIONTIME = 900000; String jwt = ""; String
+ * invalidjwt = "";
  * 
- * @Before public void setup() { jwt =
- * "Bearer "+Jwts.builder().setSubject("user").claim("roles",
- * "user").setIssuedAt(new Date()) .signWith(SignatureAlgorithm.HS256,
- * "secretkey").setExpiration(new Date(System.currentTimeMillis() +
- * EXPIRATIONTIME)).compact();
- * 
+ * @Before public void setup() { jwt = "Bearer " +
+ * Jwts.builder().setSubject("user").claim("roles", "user").setIssuedAt(new
+ * Date()) .signWith(SignatureAlgorithm.HS256, "secretkey") .setExpiration(new
+ * Date(System.currentTimeMillis() + EXPIRATIONTIME)).compact();
  * 
  * }
  * 
@@ -66,43 +63,43 @@
  * orderRequestDto.setRestaurantId(1L);
  * orderRequestDto.setItems(orderedItemsList);
  * when(orderService.placeOrder(any(OrderRequestDto.class))).thenReturn(order);
- * RequestBuilder request = MockMvcRequestBuilders.post( "/order")
- * .contentType(MediaType.APPLICATION_JSON)
- * .content(objectMapper.writeValueAsString((orderRequestDto)))
- * .header(HttpHeaders.AUTHORIZATION, jwt); mockMvc.perform(request)
- * .andExpect(status().is(200)) .andReturn(); }
- * 
+ * RequestBuilder request =
+ * MockMvcRequestBuilders.post("/order").contentType(MediaType.APPLICATION_JSON)
+ * .content(objectMapper.writeValueAsString((orderRequestDto))).header(
+ * HttpHeaders.AUTHORIZATION, jwt);
+ * mockMvc.perform(request).andExpect(status().is(200)).andReturn(); }
  * 
  * @Test public void cancelOrder() throws Exception {
  * 
- * 
  * when(orderService.cancelOrder(anyLong())).thenReturn(true); RequestBuilder
- * request = MockMvcRequestBuilders.put( "/order/cancel/1")
- * .accept(MediaType.ALL) .header(HttpHeaders.AUTHORIZATION, jwt);
- * mockMvc.perform(request) .andExpect(status().isOk()) .andReturn(); }
+ * request = MockMvcRequestBuilders.put("/order/cancel/1").accept(MediaType.ALL)
+ * .header(HttpHeaders.AUTHORIZATION, jwt);
+ * mockMvc.perform(request).andExpect(status().isOk()).andReturn(); }
  * 
  * @Test public void cancelOrder_failed() throws Exception {
  * 
  * when(orderService.cancelOrder(anyLong())).thenReturn(false); RequestBuilder
- * request = MockMvcRequestBuilders.put( "/order/cancel/1")
- * .accept(MediaType.ALL) .header(HttpHeaders.AUTHORIZATION, jwt);
- * mockMvc.perform(request) .andExpect(status().is(400)) .andReturn(); }
+ * request = MockMvcRequestBuilders.put("/order/cancel/1").accept(MediaType.ALL)
+ * .header(HttpHeaders.AUTHORIZATION, jwt);
+ * mockMvc.perform(request).andExpect(status().is(400)).andReturn(); }
  * 
  * @Test public void getOrderAmountByOrderId_positive() throws Exception {
  * 
  * when(orderService.getOrderAmountByOrderId(anyLong())).thenReturn(100.0);
- * RequestBuilder request = MockMvcRequestBuilders.get( "/order/value/1")
- * .accept(MediaType.ALL) .header(HttpHeaders.AUTHORIZATION, jwt);
- * mockMvc.perform(request) .andExpect(status().is(200)) .andReturn();
+ * RequestBuilder request =
+ * MockMvcRequestBuilders.get("/order/value/1").accept(MediaType.ALL)
+ * .header(HttpHeaders.AUTHORIZATION, jwt);
+ * mockMvc.perform(request).andExpect(status().is(200)).andReturn();
  * 
  * }
  * 
  * @Test public void getOrderAmountByOrderId_negative() throws Exception {
  * 
  * when(orderService.getOrderAmountByOrderId(anyLong())).thenReturn(0.0);
- * RequestBuilder request = MockMvcRequestBuilders.get( "/order/value/1")
- * .accept(MediaType.ALL) .header(HttpHeaders.AUTHORIZATION, jwt);
- * mockMvc.perform(request) .andExpect(status().is(400)) .andReturn();
+ * RequestBuilder request =
+ * MockMvcRequestBuilders.get("/order/value/1").accept(MediaType.ALL)
+ * .header(HttpHeaders.AUTHORIZATION, jwt);
+ * mockMvc.perform(request).andExpect(status().is(400)).andReturn();
  * 
  * }
  * 
@@ -110,11 +107,9 @@
  * 
  * Optional<Order> order = Optional.of(new Order(1L, "CREATED", 1L));
  * when(orderService.getOrderById(anyLong())).thenReturn(order); RequestBuilder
- * request = MockMvcRequestBuilders.get( "/order/1") .accept(MediaType.ALL)
- * .header(HttpHeaders.AUTHORIZATION, jwt); mockMvc.perform(request)
- * .andExpect(status().is(200)) .andReturn();
- * 
- * 
+ * request = MockMvcRequestBuilders.get("/order/1").accept(MediaType.ALL)
+ * .header(HttpHeaders.AUTHORIZATION, jwt);
+ * mockMvc.perform(request).andExpect(status().is(200)).andReturn();
  * 
  * }
  * 
@@ -122,68 +117,63 @@
  * 
  * Optional<Order> order = Optional.empty();
  * when(orderService.getOrderById(anyLong())).thenReturn(order); RequestBuilder
- * request = MockMvcRequestBuilders.get( "/order/1") .accept(MediaType.ALL)
+ * request = MockMvcRequestBuilders.get("/order/1").accept(MediaType.ALL)
  * .header(HttpHeaders.AUTHORIZATION, jwt); mockMvc.perform(request)
  * 
- * .andExpect(status().is(400)) .andReturn();
+ * .andExpect(status().is(400)).andReturn();
  * 
  * }
  * 
- * @Test public void updateOrder() throws Exception{ List<OrderedItem>
+ * @Test public void updateOrder() throws Exception { List<OrderedItem>
  * orderedList = new ArrayList<>(); List<OrderedItemsDto> orderedDto = new
  * ArrayList<>();
  * 
  * OrderUpdateDto orderUpdateDto = new OrderUpdateDto(1L, 1L, orderedDto, 1L);
- * when(orderService.updateOrder(any(OrderUpdateDto.class))).thenReturn(new
- * OrderUpdateResponseDto(1L, 1L, "UPDATED", 1L,orderedList )); RequestBuilder
- * request = MockMvcRequestBuilders.put( "/order")
- * .contentType(MediaType.APPLICATION_JSON)
- * .content(objectMapper.writeValueAsString((orderUpdateDto)))
- * .header(HttpHeaders.AUTHORIZATION, jwt); mockMvc.perform(request)
- * .andExpect(status().is(200)) .andReturn();
+ * when(orderService.updateOrder(any(OrderUpdateDto.class))) .thenReturn(new
+ * OrderUpdateResponseDto(1L, 1L, "UPDATED", 1L, orderedList)); RequestBuilder
+ * request =
+ * MockMvcRequestBuilders.put("/order").contentType(MediaType.APPLICATION_JSON)
+ * .content(objectMapper.writeValueAsString((orderUpdateDto))).header(
+ * HttpHeaders.AUTHORIZATION, jwt);
+ * mockMvc.perform(request).andExpect(status().is(200)).andReturn();
  * 
  * }
  * 
- * @Test(expected=InvalidTokenException.class) public void updateOrder_invalid()
- * throws Exception{ List<OrderedItem> orderedList = new ArrayList<>();
- * List<OrderedItemsDto> orderedDto = new ArrayList<>(); jwt =
- * "Bearer "+Jwts.builder().setSubject("user").claim("roles",
+ * @Test(expected = InvalidTokenException.class) public void
+ * updateOrder_invalid() throws Exception { List<OrderedItem> orderedList = new
+ * ArrayList<>(); List<OrderedItemsDto> orderedDto = new ArrayList<>(); jwt =
+ * "Bearer " + Jwts.builder().setSubject("user").claim("roles",
  * "user").setIssuedAt(new Date()) .signWith(SignatureAlgorithm.HS256,
- * "secretkey").setExpiration(new Date(System.currentTimeMillis() -
+ * "secretkey") .setExpiration(new Date(System.currentTimeMillis() -
  * EXPIRATIONTIME)).compact(); OrderUpdateDto orderUpdateDto = new
  * OrderUpdateDto(1L, 1L, orderedDto, 1L);
- * when(orderService.updateOrder(any(OrderUpdateDto.class))).thenReturn(new
- * OrderUpdateResponseDto(1L, 1L, "UPDATED", 1L,orderedList )); RequestBuilder
- * request = MockMvcRequestBuilders.put( "/order")
- * .contentType(MediaType.APPLICATION_JSON)
- * .content(objectMapper.writeValueAsString((orderUpdateDto)))
- * .header(HttpHeaders.AUTHORIZATION, jwt); mockMvc.perform(request)
- * .andExpect(status().is(401)) .andReturn();
+ * when(orderService.updateOrder(any(OrderUpdateDto.class))) .thenReturn(new
+ * OrderUpdateResponseDto(1L, 1L, "UPDATED", 1L, orderedList)); RequestBuilder
+ * request =
+ * MockMvcRequestBuilders.put("/order").contentType(MediaType.APPLICATION_JSON)
+ * .content(objectMapper.writeValueAsString((orderUpdateDto))).header(
+ * HttpHeaders.AUTHORIZATION, jwt);
+ * mockMvc.perform(request).andExpect(status().is(401)).andReturn();
  * 
  * }
  * 
- * @Test(expected=InvalidTokenException.class) public void
- * updateOrder_null_token() throws Exception{ List<OrderedItem> orderedList =
+ * @Test(expected = InvalidTokenException.class) public void
+ * updateOrder_null_token() throws Exception { List<OrderedItem> orderedList =
  * new ArrayList<>(); List<OrderedItemsDto> orderedDto = new ArrayList<>(); jwt
- * = "Bearer "+Jwts.builder().setSubject("user").claim("roles",
+ * = "Bearer " + Jwts.builder().setSubject("user").claim("roles",
  * "user").setIssuedAt(new Date()) .signWith(SignatureAlgorithm.HS256,
- * "secretkey").setExpiration(new Date(System.currentTimeMillis() -
+ * "secretkey") .setExpiration(new Date(System.currentTimeMillis() -
  * EXPIRATIONTIME)).compact(); OrderUpdateDto orderUpdateDto = new
  * OrderUpdateDto(1L, 1L, orderedDto, 1L);
- * when(orderService.updateOrder(any(OrderUpdateDto.class))).thenReturn(new
- * OrderUpdateResponseDto(1L, 1L, "UPDATED", 1L,orderedList )); RequestBuilder
- * request = MockMvcRequestBuilders.put( "/order")
- * .contentType(MediaType.APPLICATION_JSON)
- * .content(objectMapper.writeValueAsString((orderUpdateDto)))
- * .header(HttpHeaders.AUTHORIZATION, " help"); mockMvc.perform(request)
- * .andExpect(status().is(401)) .andReturn();
+ * when(orderService.updateOrder(any(OrderUpdateDto.class))) .thenReturn(new
+ * OrderUpdateResponseDto(1L, 1L, "UPDATED", 1L, orderedList)); RequestBuilder
+ * request =
+ * MockMvcRequestBuilders.put("/order").contentType(MediaType.APPLICATION_JSON)
+ * .content(objectMapper.writeValueAsString((orderUpdateDto))).header(
+ * HttpHeaders.AUTHORIZATION, " help");
+ * mockMvc.perform(request).andExpect(status().is(401)).andReturn();
  * 
  * }
- * 
- * 
- * 
- * 
- * 
  * 
  * }
  */

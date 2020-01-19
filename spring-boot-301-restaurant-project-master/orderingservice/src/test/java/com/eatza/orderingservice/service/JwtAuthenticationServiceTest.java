@@ -6,6 +6,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.eatza.order.dto.UserDto;
@@ -13,6 +18,10 @@ import com.eatza.order.exception.UnauthorizedException;
 import com.eatza.order.service.authenticationservice.JwtAuthenticationService;
 
 @RunWith(SpringRunner.class)
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigurationPackage
+@SpringBootConfiguration
 public class JwtAuthenticationServiceTest {
 	
 

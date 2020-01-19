@@ -17,10 +17,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import com.eatza.order.dto.ItemFetchDto;
@@ -39,6 +42,10 @@ import com.eatza.order.service.orderservice.OrderServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
+@AutoConfigureTestDatabase(replace = Replace.NONE)
+@DataJpaTest
+@AutoConfigurationPackage
+@SpringBootConfiguration
 public class OrderServiceTest {
 
 	@InjectMocks
